@@ -317,7 +317,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   resume: {
     position: "relative",
     minHeight: "100vh",
-    width: "100vw",
+    width: "100%",
     color: "white",
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: "cover",
@@ -328,12 +328,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     alignItems: "flex-start",
     overflowX: "hidden", // Prevent horizontal overflow
+    boxSizing: "border-box", // Ensure padding doesn't add to width
   },
   sideNav: {
     position: "absolute",
     top: "1.5rem",
-    left: "1rem", // Adjusted to keep within screen
+    left: "1rem",
     zIndex: 30,
+    maxWidth: "calc(100% - 2rem)", // Constrain width to fit within screen
+    overflow: "hidden", // Prevent internal overflow
   },
   sectionHeading: {
     fontSize: "clamp(1.5rem, 4vw, 2rem)",
@@ -478,7 +481,8 @@ const mediaStyles = `
     }
     .sideNav {
       top: 1rem;
-      left: 0.5rem; // Adjusted for smaller screens
+      left: 0.5rem;
+      maxWidth: "calc(100% - 1rem)"; // Adjusted for tablets
     }
     .sectionHeading {
       font-size: 1.5rem;
@@ -493,7 +497,8 @@ const mediaStyles = `
     }
     .sideNav {
       top: 0.5rem;
-      left: 0.25rem; // Further adjusted for phones
+      left: 0.25rem;
+      maxWidth: "calc(100% - 0.5rem)"; // Adjusted for phones
     }
     .sectionHeading {
       font-size: 1.2rem;
