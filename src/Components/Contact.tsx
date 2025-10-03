@@ -11,15 +11,83 @@ const Contact: React.FC = () => {
     message: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  // Validation functions
+  const validateName = (name: string) => {
+    const nameRegex = /^[a-zA-Z\s]+$/; // Only letters and spaces
+    if (!name) return "Name is required";
+    if (!nameRegex.test(name)) return "Name must contain only letters and spaces";
+    return "";
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation
+    if (!email) return "Email is required";
+    if (!emailRegex.test(email)) return "Invalid email address";
+    return "";
+  };
+
+  const validateSubject = (subject: string) => {
+    const subjectRegex = /[a-zA-Z]/; // Must contain at least one letter
+    if (!subject) return "Subject is required";
+    if (!subjectRegex.test(subject)) return "Subject must contain at least one letter";
+    return "";
+  };
+
+  const validateMessage = (message: string) => {
+    const messageRegex = /[a-zA-Z]/; // Must contain at least one letter
+    if (!message) return "Message is required";
+    if (!messageRegex.test(message)) return "Message must contain at least one letter";
+    return "";
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    // Validate on change
+    setErrors({
+      ...errors,
+      [name]:
+        name === "name"
+          ? validateName(value)
+          : name === "email"
+          ? validateEmail(value)
+          : name === "subject"
+          ? validateSubject(value)
+          : validateMessage(value),
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate all fields before submission
+    const nameError = validateName(formData.name);
+    const emailError = validateEmail(formData.email);
+    const subjectError = validateSubject(formData.subject);
+    const messageError = validateMessage(formData.message);
+
+    setErrors({
+      name: nameError,
+      email: emailError,
+      subject: subjectError,
+      message: messageError,
+    });
+
+    // If any error exists, prevent submission
+    if (nameError || emailError || subjectError || messageError) {
+      alert("Please fix the errors in the form before submitting.");
+      return;
+    }
 
     emailjs
       .send(
@@ -38,6 +106,7 @@ const Contact: React.FC = () => {
           console.log("Success:", result.text);
           alert("Message sent successfully!");
           setFormData({ name: "", email: "", subject: "", message: "" });
+          setErrors({ name: "", email: "", subject: "", message: "" });
         },
         (error) => {
           console.error("Error:", error.text);
@@ -57,43 +126,55 @@ const Contact: React.FC = () => {
         <h2 className="contact-title">Contact</h2>
 
         <form onSubmit={handleSubmit} className="contact-inputs">
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter a valid email address"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="contact-input"
-          />
+          <div className="input-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter a valid email address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="contact-input"
+            />
+            {errors.email && <span className="error">{errors.email}</span>}
+          </div>
 
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter your Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="contact-input"
-          />
+          <div className="input-group">
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="contact-input"
+            />
+            {errors.name && <span className="error">{errors.name}</span>}
+          </div>
 
-          <input
-            type="text"
-            name="subject"
-            placeholder="Enter your Subject"
-            value={formData.subject}
-            onChange={handleChange}
-            className="contact-input subject-input"
-          />
+          <div className="input-group">
+            <input
+              type="text"
+              name="subject"
+              placeholder="Enter your Subject"
+              value={formData.subject}
+              onChange={handleChange}
+              className="contact-input subject-input"
+            />
+            {errors.subject && <span className="error">{errors.subject}</span>}
+          </div>
 
-          <textarea
-            name="message"
-            placeholder="Enter your message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            className="contact-input message-input"
-          />
+          <div className="input-group">
+            <textarea
+              name="message"
+              placeholder="Enter your message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              className="contact-input message-input"
+            />
+            {errors.message && <span className="error">{errors.message}</span>}
+          </div>
 
           <button type="submit" className="contact-submit">
             Submit
@@ -134,12 +215,6 @@ const Contact: React.FC = () => {
             font-weight: bold;
             margin-bottom: 4rem;
             text-align: center;
-          }
-          .contact-subtitle {
-            color: #a0a0a0;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.875rem;
           }
           .contact-inputs {
             display: flex;
@@ -182,6 +257,16 @@ const Contact: React.FC = () => {
           .contact-submit:hover {
             background-color: #333;
           }
+          .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+          }
+          .error {
+            color: #ff4d4d;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+          }
           @media (max-width: 640px) {
             .contact-form {
               padding: 1rem;
@@ -197,6 +282,9 @@ const Contact: React.FC = () => {
             }
             .message-input {
               height: 4rem;
+            }
+            .error {
+              font-size: 0.65rem;
             }
           }
         `}

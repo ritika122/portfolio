@@ -3,11 +3,10 @@ import ProjectCard from "./ProjectCard";
 import SideNav from "./Navigation";
 import backgroundImage from "../assets/charger.jpg";
 import evChargerImage from "../assets/evcharger.jpg";
-import ispImageUrl from "../assets/safety.png";
+import ispImageUrl from "../assets/safety1.jpg";
 
 const ProjectCard1: React.FC = () => {
   const styles: { [key: string]: React.CSSProperties } = {
-    
     container: {
       position: "relative",
       minHeight: "120vh",
@@ -41,6 +40,10 @@ const ProjectCard1: React.FC = () => {
       right: "2.5rem",
       zIndex: 30,
     },
+    detailsStyle: { // Custom style for details
+      marginLeft: "1rem", // Shift left by 1rem (adjust as needed)
+      paddingLeft: "1rem", // Optional: Add padding to maintain readability
+    },
   };
 
   return (
@@ -66,6 +69,7 @@ const ProjectCard1: React.FC = () => {
           ]}
           imageUrl={evChargerImage}
           description=""
+          detailsStyle={styles.detailsStyle} // Pass custom style to details
         />
 
         <ProjectCard
@@ -78,6 +82,7 @@ const ProjectCard1: React.FC = () => {
           ]}
           imageUrl={ispImageUrl}
           description=""
+          detailsStyle={styles.detailsStyle} // Pass custom style to details
         />
       </div>
     </div>

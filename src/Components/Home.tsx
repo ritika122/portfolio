@@ -6,9 +6,12 @@ import { FaEnvelope, FaLinkedin, FaPhone } from "react-icons/fa";
 // ===== Styles with correct TypeScript typing =====
 const styles: { [key: string]: React.CSSProperties } = {
   home: {
-    position: "relative",
+    position: "absolute",
+    top: 0,
+    left: 0,
     height: "100vh",
     width: "100vw",
+    // overflow: "hidden", // Keep this for now, but we’ll adjust if needed
     color: "white",
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: "cover",
@@ -30,16 +33,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     zIndex: 30,
   },
   mainContent: {
-    position: "relative",
+    position: "absolute",
+    top: "50%",
+    left: "10%",
+    transform: "translateY(-50%)",
     zIndex: 10,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
     alignItems: "flex-start",
-    height: "100%",
-    padding: "2rem 2rem 0 5%",
     maxWidth: "90%",
-    marginTop: "4rem",
   },
   heading: {
     fontSize: "clamp(2rem, 5vw, 2.5rem)",
@@ -67,24 +69,23 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontWeight: 400,
     marginTop: "0rem",
     display: "block",
-    // color: "#FFD700",
     color: "#0099CC",
   },
   socialBox: {
-    position: "absolute",
-    bottom: "5rem",
-    left: "5%",
+    position: "fixed", // Fixed to viewport
+    bottom: "1.5rem", // Add some padding from the bottom
+    left: "15%", // Center horizontally
+    transform: "translateX(-50%)", // Perfect centering
     display: "flex",
     gap: "1rem",
     padding: "0.5rem 1.5rem",
-    backgroundColor: "transparent", // blank background
-    boxShadow: "0 4px 10px rgba(158, 149, 149, 0.33)", // gray shadow
+    backgroundColor: "transparent",
+    boxShadow: "0 4px 10px rgba(158, 149, 149, 0.33)",
     borderRadius: "2rem",
     alignItems: "center",
-    zIndex: 50,
-    backdropFilter: "blur(4px)", // optional glassy effect
+    zIndex: 100, // Higher z-index to ensure it’s on top
+    backdropFilter: "blur(4px)",
   },
-
   iconLink: {
     color: "white",
     fontSize: "clamp(1.2rem, 4vw, 1.5rem)",
@@ -107,6 +108,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 const Home: React.FC = () => {
   const [showPhone, setShowPhone] = useState(false);
+
   return (
     <div id="home" style={styles.home}>
       {/* Greeting */}
@@ -121,7 +123,6 @@ const Home: React.FC = () => {
       <div style={styles.mainContent}>
         <h1 style={styles.heading}>Hi, I'm Ritika Kalal</h1>
 
-        {/* Split paragraph for different styles */}
         <p style={styles.paragraph}>
           <span style={styles.mainText}>A passionate Full-Stack Developer</span>
           <br />
@@ -133,45 +134,34 @@ const Home: React.FC = () => {
             Postgres SQL
           </span>
         </p>
+      </div>
 
-        {/* Social Box */}
-        <div style={styles.socialBox}>
-          {/* <a
-            href="ritikagkalal12@gmail.com"
-            target="_blank"
-            rel="noreferrer"
-            style={styles.iconLink}
-          >
-            <FaEnvelope />
-          </a> */}
-          <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=ritikagkalal12@gmail.com"
-            target="_blank"
-            rel="noreferrer"
-            style={styles.iconLink}
-          >
-            <FaEnvelope /> 
-          </a>
+      {/* Social Box - Moved outside mainContent */}
+      <div style={styles.socialBox}>
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=ritikagkalal12@gmail.com"
+          target="_blank"
+          rel="noreferrer"
+          style={styles.iconLink}
+        >
+          <FaEnvelope />
+        </a>
 
-          <a
-            href="https://linkedin.com/in/ritika-kalal-2271081a5"
-            target="_blank"
-            rel="noreferrer"
+        <a
+          href="https://linkedin.com/in/ritika-kalal-2271081a5"
+          target="_blank"
+          rel="noreferrer"
+          style={styles.iconLink}
+        >
+          <FaLinkedin />
+        </a>
+
+        <div style={{ position: "relative" }}>
+          <FaPhone
             style={styles.iconLink}
-          >
-            <FaLinkedin />
-          </a>
-          {/* <a href="tel:+911234567890" style={styles.iconLink}>
-            <FaPhone />
-          </a> */}
-          {/* Phone icon with tooltip */}
-          <div style={{ position: "relative" }}>
-            <FaPhone
-              style={styles.iconLink}
-              onClick={() => setShowPhone(!showPhone)}
-            />
-            {showPhone && <div style={styles.phoneTooltip}>+91 9380755742</div>}
-          </div>
+            onClick={() => setShowPhone(!showPhone)}
+          />
+          {showPhone && <div style={styles.phoneTooltip}>+91 9380755742</div>}
         </div>
       </div>
     </div>

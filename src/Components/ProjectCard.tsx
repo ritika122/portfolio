@@ -6,6 +6,7 @@ interface ProjectCardProps {
   description: string;
   details: string[];
   imageUrl: string;
+  detailsStyle?: React.CSSProperties; // Already defined, no change needed
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -14,6 +15,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   description,
   details,
   imageUrl,
+  detailsStyle,
 }) => (
   <>
     <style>
@@ -27,12 +29,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           overflow: hidden;
           box-shadow: 0 6px 24px rgba(0,0,0,0.10);
           margin: 3rem auto;
-          max-width: 1000px; /* Increased from 800px to 1000px */
+          max-width: 1000px;
           width: 100%;
         }
         .project-card__image-container {
           width: 100%;
-          height: 320px; /* Increased from 260px to 320px for larger image area */
+          height: 320px;
           background: #f3f4f6;
           display: flex;
           align-items: center;
@@ -63,7 +65,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           font-weight: bold;
         }
         .project-card__details {
-          margin-left: 1.5rem;
+          margin-left: 1.5rem; /* Default margin, can be overridden by detailsStyle */
           margin-bottom: 1rem;
           font-size: 1rem;
           list-style-type: disc;
@@ -76,12 +78,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         @media (min-width: 768px) {
           .project-card {
             flex-direction: row;
-            height: 400px; /* Increased from 340px to 400px */
+            height: 400px;
           }
           .project-card__image-container {
             flex: 1;
             height: 100%;
-            max-width: 450px; /* Increased from 360px to 450px */
+            max-width: 450px;
           }
           .project-card__content {
             flex: 2;
@@ -103,7 +105,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <p className="project-card__skills">
           <span className="bold">Skills Used:</span> {skills}
         </p>
-        <ul className="project-card__details">
+        <ul className="project-card__details" style={detailsStyle}> {/* Apply detailsStyle here */}
           {details.map((point, idx) => (
             <li key={idx}>{point}</li>
           ))}

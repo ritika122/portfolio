@@ -74,7 +74,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "white",
     position: "fixed",
     top: "1.5rem",
-    right: "2.5rem",
+    right: "1rem",
     zIndex: 50,
     background: "transparent",
     border: "none",

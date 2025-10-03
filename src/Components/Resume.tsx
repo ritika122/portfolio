@@ -133,7 +133,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   closeButton: {
     marginTop: "10px",
     padding: "10px 15px",
-    background: "#00BFFF",
+    background: "#3d3e3eff",
     border: "none",
     borderRadius: "6px",
     cursor: "pointer",
