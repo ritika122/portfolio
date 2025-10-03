@@ -36,7 +36,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   mainContent: {
     position: "absolute",
     top: "50%",
-    left: "5%",
+    left: "3%",
     transform: "translateY(-50%)",
     zIndex: 10,
     display: "flex",
@@ -76,7 +76,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   socialBox: {
     position: "fixed",
     bottom: "1.5rem",
-    left: "5%", // Left-aligned with margin space
+    left: "3%", // Left-aligned with margin space
     display: "flex",
     gap: "1rem",
     padding: "0.5rem 1.5rem",
